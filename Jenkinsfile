@@ -1,13 +1,13 @@
 pipeline {
     agent any
-    environment{
+    environment { 
         SERVER_IP = credentials('prod-server-ip')
     }
 
     stages {
             stage('Setup') {
             steps {
-                sh "pip install -r requirements.txt"
+                sh "pip install --break-system-package -r requirements.txt"
             }
         }
         stage('test'){
@@ -23,10 +23,10 @@ pipeline {
         }
         stage('Deploy-to-prod'){
             steps{
-                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key', keyFIleVariable: 'MY_SSH_KEY',usernameVariable: 'username')])
+                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key', keyFIleVariable: 'MY_SSH_KEY',usernameVariable: 'username')]){
                 sh '''
-                scp -i $MY_SSH_KEY -o StrictHostChecking=no myapp.zip ${username}@${SERVER_IP):/root
-                ssh -i $MY_SSH_KEY -o StrictHostChecking=no ${username}@${SERVER_IP}<<
+                scp -i $MY_SSH_KEY -o StrictHostKeyChecking=no myapp.zip ${username}@${SERVER_IP):/root
+                ssh -i $MY_SSH_KEY -o StrictHostKeyChecking=no ${username}@${SERVER_IP} <<
                 EOF
                 unzip -o /root/myapp.zip -d /root/GMS
                 source GMS/venv/bin/activate
@@ -35,6 +35,7 @@ pipeline {
                 systemctl restart flask.service
 EOF
              '''
+            }
             }
         }
     }
