@@ -25,7 +25,7 @@ Designed and implemented a CI/CD pipeline using Jenkins to automate application 
   
   WorkingDirectory=/root/GMS
   
-  Environment="PATH=/root/GMS/venv/bin"
+  Environment=PATH=/root/GMS/venv/bin
   
   ExecStart=/root/GMS/venv/bin/python3 /root/app/app.py
 
