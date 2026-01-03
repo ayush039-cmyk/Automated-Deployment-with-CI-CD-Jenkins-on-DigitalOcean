@@ -25,12 +25,12 @@ pipeline {
             steps{
                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key', keyFileVariable: 'MY_SSH_KEY',usernameVariable: 'username')]){
                 sh '''
-                sudo scp -i $MY_SSH_KEY -o StrictHostKeyChecking=no myapp.zip ${username}@${SERVER_IP}:/root
+                sudo scp -i $MY_SSH_KEY -o StrictHostKeyChecking=no myapp.zip ${username}@${SERVER_IP}:/home/ubuntu
                 sudo ssh -i $MY_SSH_KEY -o StrictHostKeyChecking=no ${username}@${SERVER_IP} <<
                 EOF
-                unzip -o /root/myapp.zip -d /root/GMS
-                source GMS/venv/bin/activate
-                cd /root/GMS
+                unzip -o /home/ubuntu/myapp.zip -d /home/ubuntu/app
+                source app/venv/bin/activate
+                cd /home/ubuntu/app
                 pip install -r requirements.txt
                 sudo systemctl restart flask.service
 EOF
