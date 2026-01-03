@@ -15,7 +15,7 @@ Designed and implemented a CI/CD pipeline using Jenkins to automate application 
  
    [Unit]
    
-   Discription=flask app
+   Description=flask app
    
    After=network.target
 
