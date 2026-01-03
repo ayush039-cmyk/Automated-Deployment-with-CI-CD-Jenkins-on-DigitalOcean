@@ -35,8 +35,12 @@ Designed and implemented a CI/CD pipeline using Jenkins to automate application 
   
   ::: Copy paste exactly
 
-5.Open Jenkins and create a new pipeline job
+5. sudo systemctl daemon-reload
+6. sudo systemctl enable flask.service
+7. sudo systemctl start flask.service
 
-6.Webhook into github repo 
+8.Open Jenkins and create a new pipeline job
+
+9.Webhook into github repo 
 
 All Set!!!
